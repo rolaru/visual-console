@@ -1,5 +1,16 @@
 const consoleElement = document.querySelector('.console');
 
+const consoleConfig = {
+  withLineNumbers: true,
+  allowHorizontalScroll: false,
+};
+
+let currentLine = 1;
+
+if (consoleConfig.allowHorizontalScroll) {
+  consoleElement.classList.add('with-horizontal-scroll');
+}
+
 export const logMessage = (message) => {
   if (message) {
     message = JSON.stringify(message, null, '  ');
@@ -12,5 +23,9 @@ export const logMessage = (message) => {
     message = '<br />';
   }
 
-  consoleElement.innerHTML += message;
+  const lineNumber = consoleConfig.withLineNumbers
+    ? `<span class="line-number">${currentLine++}</span>`
+    : '';
+
+  consoleElement.innerHTML += `${lineNumber}${message}`;
 };
